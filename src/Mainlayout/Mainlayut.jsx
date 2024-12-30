@@ -7,7 +7,9 @@ const Mainlayut = () => {
     return (
         <div>
             <Nvaber></Nvaber>
+            <div className='min-h-screen mx-auto '>
             <Outlet></Outlet>
+            </div>
             <Footer></Footer>
         </div>
     );
