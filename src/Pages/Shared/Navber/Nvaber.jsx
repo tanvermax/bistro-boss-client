@@ -1,37 +1,71 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { FaOpencart } from "react-icons/fa6";
+
+import { AuthContext } from "../../../Provider/AuthProvider";
+import useCart from "../../../Provider/useCart";
+import Swal from "sweetalert2";
 
 const Nvaber = () => {
+  const { user, logoutuser, } = useContext(AuthContext);
+  const [cart] = useCart();
+  // if (!user) {
+  //   return <div>Loading...</div>; // Or any fallback UI when user is null
+  // }
+  const handlelogout = () => {
+    logoutuser()
+      .then(() => {
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const naboption = (
     <>
       {" "}
       <li>
-        <a>Home</a>
+        <Link className="btn" to={"/"}>
+          Home
+        </Link>
       </li>
       <li>
-        <a>DASHBOARD</a>
-        <ul className="p-2">
-          <li>
-            <a>Submenu 1</a>
-          </li>
-          <li>
-            <a>Submenu 2</a>
-          </li>
-        </ul>
+        <Link className="btn" to={"/secret"}>
+          secrect
+        </Link>
       </li>
       <li>
-        <a>CONTACT us</a>
+        <Link className="btn" to={"/ourmenu"}>
+          OUR MENU
+        </Link>
       </li>
       <li>
-        <a>Our Menu</a>
+        <Link className="btn" to={"/order/SALADS"}>
+          ORDER FOOD
+        </Link>
       </li>
       <li>
-        <a>Our Shop</a>
+        <Link to={"/dashbord/cart"} className="btn">
+          <FaOpencart />
+          <div className="badge badge-secondary">+{cart.length}</div>
+        </Link>
       </li>
+      {/* <li>
+        <Link to={"/login"} className="btn">
+          Log in
+        </Link>
+      </li>
+      <li>
+        <button onClick={handlelogout} className="btn">
+          logout
+        </button>
+      </li> */}
     </>
   );
   return (
-    <div>
-      <div className="navbar fixed z-10">
+    <div className="">
+      <div className="navbar fixed z-10 px-32">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,20 +86,42 @@ const Nvaber = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content  rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               {naboption}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="btn bg-black text-white  text-xl cinzel">Bistro</a>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {naboption}
-          </ul>
+        <div className="navbar-center   hidden lg:flex">
+          <ul className="menu menu-horizontal px-1 gap-4  ">{naboption}</ul>
         </div>
-        <div className="navbar-end">
-          <a className="">Sign in</a>
+        <div className="navbar-end gap-10">
+          {/* <Link to={"/login"} className="btn ">
+            Log in
+          </Link>
+          <li>
+        <button onClick={handlelogout} className="btn">
+          logout
+        </button>
+      </li> */}
+          {user ? (
+            <>
+              <p>Name: {user?.displayName || "Guest"}</p>
+              <button onClick={handlelogout} className="btn bg-yellow-500">
+                logout
+              </button>
+            </>
+          ) : (
+           <>
+              <Link to={"/login"} className="btn">
+                Log in
+              </Link>
+              <Link to={"/signin"} className="btn">
+                sign in
+              </Link>
+            </> 
+           )}
         </div>
       </div>
     </div>

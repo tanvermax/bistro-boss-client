@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       backgroundImage:{
-        "hero-patter": "url('./src/assets/home/chef-service.jpg')"
+        "hero-patter": "url('./src/assets/home/chef-service.jpg')",
       }
     },
   },
