@@ -3,6 +3,7 @@ import Sectiontitle from "../../Pages/Shared/Sectiontitle";
 import { useForm } from "react-hook-form";
 import { ImSpoonKnife } from "react-icons/im";
 import useAxiospublic from "../../Hooks/useAxiospublic";
+import useAxiossecure from "../../Provider/useAxiossecure";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -10,6 +11,7 @@ const Additem = () => {
   const { register, handleSubmit } = useForm();
 
   const axiospublic = useAxiospublic();
+  const axiosSecure = useAxiossecure();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -20,6 +22,23 @@ const Additem = () => {
         "content-type": "multipart/form-data",
       },
     });
+    if (res.data.success) {
+      const menuitem = {
+        name : data.name,
+        category : data.category,
+        price: parseFloat(data.price),
+        recipe: data.recipe,
+        image: res.data.data.display_url
+
+      } 
+      // 
+      const  menures = await axiosSecure.post('/menu', menuitem);
+      console.log(menures.data);
+      if (menures.data.insertedId) {
+        alert("succesfully added")
+      }
+
+    }
     console.log(res.data);
   };
 
@@ -42,7 +61,7 @@ const Additem = () => {
             </label>
             <input
               id="recipeName"
-              {...register("recipeName", { required: true })}
+              {...register("name", { required: true })}
               className="w-full   p-3 text-gray-700 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
               type="text"
               placeholder="Enter recipe name"
