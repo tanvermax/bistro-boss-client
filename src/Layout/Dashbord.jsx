@@ -77,7 +77,7 @@ const Dashbord = () => {
           </li>
         </ul>
       </div>
-      <div className="flex p-20">
+      <div className="w-full p-20">
         <Outlet></Outlet>
       </div>
     </div>

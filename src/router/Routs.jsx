@@ -10,6 +10,8 @@ import SECRect from "./SECRect";
 import Cart from "../Layout/Cart";
 import Dashbord from "../Layout/Dashbord";
 import AllUsers from "../Layout/DPages/AllUsers";
+import Additem from "../Layout/DPages/Additem";
+import AdminRouts from "../Hooks/AdminRouts";
 
 export const Routs = createBrowserRouter([
   {
@@ -60,7 +62,11 @@ export const Routs = createBrowserRouter([
           // addmin
           {
             path: 'alluser',
-            element: <AllUsers></AllUsers>
+            element: <AdminRouts><AllUsers></AllUsers></AdminRouts>
+          },
+          {
+            path:'additem',
+            element: <AdminRouts><Additem></Additem></AdminRouts>
           }
         ],
       },
